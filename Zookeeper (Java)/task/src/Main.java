@@ -1,6 +1,18 @@
 import java.util.Scanner;
 
 public class Main {
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
     public static void main(String[] args) {
         String camel = """
             Switching on the camera in the camel habitat...
@@ -124,15 +136,17 @@ public class Main {
             It looks like we will soon have more rabbits!""";
 
         String[] animals = {camel, lion, deer, goose, bat, rabbit};
-
-        System.out.println("Please enter the number of the habitat you would like to view: ");
         Scanner scanner = new Scanner(System.in);
-        int desiredHabitatNumber = scanner.nextInt();
-        System.out.println(animals[desiredHabitatNumber]);
-        String endMessage = """
-                ---
-                You've reached the end of the program. To check another habitat, please restart the watcher.""";
-        System.out.print(endMessage);
+        String input = "0";
+        while (isNumeric(input)) {
+            System.out.println("Please enter the number of the habitat you would like to view:");
+            input = scanner.next();
+            if (input.equals("exit")) {
+                System.out.println("See you later!");
+                break;
+            }
+            System.out.println(animals[Integer.parseInt(input)]);
+        }
 
     }
 }
